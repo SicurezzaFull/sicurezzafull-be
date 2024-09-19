@@ -326,11 +326,11 @@ exports.checkOutAttendance = (req, res) => {
   Attendance.update(
     {
       checkOut: CURRENT_MOMENT,
-      includeFacchinaggio: req.body.includeFacchinaggio ? req.body.includeFacchinaggio : false,
+      includeFacchinaggio: req.body.includeFacchinaggio ? req.body.includeFacchinaggio : null,
       facchinaggioNameClient: req.body.facchinaggioNameClient,
       facchinaggioAddressClient: req.body.facchinaggioAddressClient,
       facchinaggioValue: req.body.facchinaggioValue,
-      includeViaggioExtra: req.body.includeViaggioExtra ? req.body.includeViaggioExtra : false,
+      includeViaggioExtra: req.body.includeViaggioExtra ? req.body.includeViaggioExtra : null,
       viaggioExtraNameClient: req.body.viaggioExtraNameClient,
       viaggioExtraAddressClient: req.body.viaggioExtraAddressClient,
       viaggioExtraValue: req.body.viaggioExtraValue,
