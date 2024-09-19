@@ -7,8 +7,8 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "cimapiazzisviluppo@gmail.com",
-    pass: "czrg avom gkpx hsok",
+    user: "sicurezzafullsviluppo@gmail.com",
+    pass: "zlat rqio uqdd shht",
   },
 });
 
@@ -28,7 +28,7 @@ exports.sendEmail = (req, res) => {
   htmlContent = htmlContent.replace("{{message}}", message);
 
   const mailOptions = {
-    from: "info@cimapiazzi.com",
+    from: "info@sicurezzafull.com",
     to: recipient,
     subject: subject,
     html: htmlContent,

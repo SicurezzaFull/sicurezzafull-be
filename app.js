@@ -51,7 +51,7 @@ async function initializeRoles() {
       await Role.create({
         id: 2,
         name: "moderator",
-        label: "CIMAPIAZZI",
+        label: "SICUREZZAFULL",
       });
       console.log("Default role 'Moderator' created.");
       await Role.create({

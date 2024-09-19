@@ -8,7 +8,7 @@ const Company = db.company;
 const Op = db.Sequelize.Op;
 var moment = require("moment/moment");
 const emailController = require("./email.controller");
-var recipientDeadLines = ["cimapiazzisviluppo@gmail.com"]; // Sostituisci con l'indirizzo email appropriato
+var recipientDeadLines = ["sicurezzafullsviluppo@gmail.com"]; // Sostituisci con l'indirizzo email appropriato
 const fs = require("fs");
 
 exports.allDeadlines = (req, res) => {

@@ -1,7 +1,7 @@
 {
-  "name": "cimapiazzi-node-js",
+  "name": "sicurezzafull-node-js",
   "version": "1.0.0",
-  "description": "Backend Cimapiazzi manager",
+  "description": "Backend Sicurezzafull manager",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

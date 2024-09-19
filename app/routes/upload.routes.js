@@ -39,7 +39,7 @@ module.exports = function (app) {
       // Upload each file to Digital Ocean Spaces
       const uploadPromises = files.map((file, index) => {
         const params = {
-          Bucket: "cimapiazzi",
+          Bucket: "sicurezzafull",
           Key:
             "attendances/" +
             currentDate +
@@ -103,7 +103,7 @@ module.exports = function (app) {
       const uploadPromises = files.map((file, index) => {
         const timestamp = Date.now();
         const params = {
-          Bucket: "cimapiazzi",
+          Bucket: "sicurezzafull",
           Key:
             "documents/" +
             fiscalCode +
@@ -164,7 +164,7 @@ module.exports = function (app) {
     const key = req.body.key;
 
     const params = {
-      Bucket: "cimapiazzi",
+      Bucket: "sicurezzafull",
       Key: key,
     };
 
