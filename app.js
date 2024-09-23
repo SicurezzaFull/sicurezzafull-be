@@ -139,6 +139,7 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/role.routes")(app);
 require("./app/routes/company.routes")(app);
+require("./app/routes/client.routes")(app);
 require("./app/routes/place.routes")(app);
 require("./app/routes/vehicle.routes")(app);
 require("./app/routes/attendance.routes")(app);
