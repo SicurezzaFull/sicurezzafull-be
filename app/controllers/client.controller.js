@@ -20,6 +20,7 @@ exports.allClients = (req, res) => {
 exports.createClient = (req, res) => {
     // Salva il cliente nel database
     Client.create({
+        name: req.body.name,
         email: req.body.email,
         phone: req.body.phone,
         address: req.body.address,
@@ -74,6 +75,7 @@ exports.patchClient = (req, res) => {
     // Aggiorna il cliente
     Client.update(
         {
+            name: req.body.name,
             email: req.body.email,
             phone: req.body.phone,
             address: req.body.address,
