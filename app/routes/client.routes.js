@@ -1,7 +1,6 @@
 const { authJwt } = require("../middleware");
 
 const controller = require("../controllers/client.controller");
-const verifyClient = require("../middleware/verifyClient");
 
 module.exports = function (app) {
     app.use(function (req, res, next) {
@@ -29,7 +28,7 @@ module.exports = function (app) {
     // Crea un nuovo client
     app.post(
         "/api/client/createClient",
-        [authJwt.verifyToken, verifyClient.checkDuplicateClient],
+        [authJwt.verifyToken],
         controller.createClient
     );
 
