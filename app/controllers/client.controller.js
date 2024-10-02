@@ -23,8 +23,10 @@ exports.allClients = (req, res) => {
 
 
 exports.createClient = upload.fields([{ name: 'signature', maxCount: 1 }, { name: 'logo', maxCount: 1 }]), (req, res) => {
+
     const { name, email, phone, address, city, postalCode, country, vat, pec, status } = req.body;
 
+    console.log(req.body)
     // Check if files are provided and handle them if necessary
     const signature = req.files['signature'] ? req.files['signature'][0].buffer.toString('base64') : null;
     const logo = req.files['logo'] ? req.files['logo'][0].buffer.toString('base64') : null;
