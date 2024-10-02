@@ -1,6 +1,8 @@
 const { authJwt } = require("../middleware");
 
 const controller = require("../controllers/client.controller");
+const storage = multer.memoryStorage(); // or diskStorage() if you want to save files to disk
+const upload = multer({ storage: storage })
 
 module.exports = function (app) {
     app.use(function (req, res, next) {
