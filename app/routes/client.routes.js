@@ -30,7 +30,7 @@ module.exports = function (app) {
     );
 
     // Crea un nuovo client
-    app.post("/api/client/createClient", [authJwt.verifyToken, upload.fields([{ name: 'signature', maxCount: 1 }, { name: 'logo', maxCount: 1 }])], exports.createClient);
+    app.post("/api/client/createClient", [authJwt.verifyToken], controller.createClient);
 
 
     // Aggiorna un client esistente
