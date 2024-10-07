@@ -42,22 +42,7 @@ exports.createClient = async (req, res) => {
         const logoFile = req.files['logo'] ? req.files['logo'][0] : null;
         const signatureFile = req.files['signature'] ? req.files['signature'][0] : null;
 
-        // Upload logo and signature to Digital Ocean Spaces and get their metadata
-        const logoUploadParams = logoFile ? {
-            Bucket: 'sicurezzafull', // Replace with your bucket name
-            Key: `clients/logos/${logoFile.originalname}`, // Set the desired path for the logo
-            Body: logoFile.buffer,
-        } : null;
-
-        const signatureUploadParams = signatureFile ? {
-            Bucket: 'sicurezzafull', // Replace with your bucket name
-            Key: `clients/signatures/${signatureFile.originalname}`, // Set the desired path for the signature
-            Body: signatureFile.buffer,
-        } : null;
-
-        const logoUploadResult = logoUploadParams ? await s3Client.upload(logoUploadParams).promise() : null;
-        const signatureUploadResult = signatureUploadParams ? await s3Client.upload(signatureUploadParams).promise() : null;
-
+        // Create client data without logo and signature
         const clientData = {
             name: req.body.name,
             email: req.body.email,
@@ -69,22 +54,58 @@ exports.createClient = async (req, res) => {
             vat: req.body.vat,
             pec: req.body.pec,
             status: req.body.status,
-            logo: logoUploadResult ? {
-                etag: logoUploadResult.ETag,
-                location: logoUploadResult.Location,
-                keyFile: logoUploadResult.Key,
-                bucket: logoUploadResult.Bucket,
-            } : null, // Store logo metadata
-            signature: signatureUploadResult ? {
-                etag: signatureUploadResult.ETag,
-                location: signatureUploadResult.Location,
-                keyFile: signatureUploadResult.Key,
-                bucket: signatureUploadResult.Bucket,
-            } : null, // Store signature metadata
         };
 
         // Save the client data to the database
         const newClient = await Client.create(clientData); // Use your ORM to save the client
+
+        let logoImage = null;
+        let signatureImage = null;
+
+        // Upload logo if it exists
+        if (logoFile) {
+            const logoUploadParams = {
+                Bucket: 'sicurezzafull', // Replace with your bucket name
+                Key: `clients/logos/${logoFile.originalname}`, // Set the desired path for the logo
+                Body: logoFile.buffer,
+            };
+
+            const logoUploadResult = await s3Client.upload(logoUploadParams).promise();
+            logoImage = {
+                etag: logoUploadResult.ETag,
+                location: logoUploadResult.Location,
+                keyFile: logoUploadResult.Key,
+                bucket: logoUploadResult.Bucket,
+                clientId: newClient.id, // Associate with the client
+            };
+        }
+
+        // Upload signature if it exists
+        if (signatureFile) {
+            const signatureUploadParams = {
+                Bucket: 'sicurezzafull', // Replace with your bucket name
+                Key: `clients/signatures/${signatureFile.originalname}`, // Set the desired path for the signature
+                Body: signatureFile.buffer,
+            };
+
+            const signatureUploadResult = await s3Client.upload(signatureUploadParams).promise();
+            signatureImage = {
+                etag: signatureUploadResult.ETag,
+                location: signatureUploadResult.Location,
+                keyFile: signatureUploadResult.Key,
+                bucket: signatureUploadResult.Bucket,
+                clientId: newClient.id, // Associate with the client
+            };
+        }
+
+        // Save logo and signature metadata to ClientImages table
+        if (logoImage) {
+            await ClientImages.create(logoImage); // Use your ORM to save the image metadata
+        }
+
+        if (signatureImage) {
+            await ClientImages.create(signatureImage); // Use your ORM to save the image metadata
+        }
 
         res.status(201).json({ message: 'Client created successfully', client: newClient });
     } catch (error) {

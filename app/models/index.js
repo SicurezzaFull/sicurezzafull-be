@@ -27,10 +27,15 @@ db.attendance = require("../models/attendance.model.js")(sequelize, Sequelize);
 db.deadlines = require("../models/deadlines.model.js")(sequelize, Sequelize);
 db.entity = require("../models/entity.model.js")(sequelize, Sequelize);
 db.permission = require("../models/permission.model.js")(sequelize, Sequelize);
+db.clientImage = require("../models/clientImages.model.js")(
+  sequelize,
+  Sequelize
+);
 db.attendanceImage = require("../models/attendanceImages.model.js")(
   sequelize,
   Sequelize
 );
+
 db.userDocument = require("../models/userDocuments.model.js")(
   sequelize,
   Sequelize
@@ -124,6 +129,17 @@ db.attendanceImage.belongsTo(db.attendance, {
 db.attendance.hasMany(db.attendanceImage, {
   foreignKey: "attendanceId",
   as: "attendanceImages",
+});
+
+//clientImages
+db.clientImages.belongsTo(db.client, {
+  foreignKey: "clientId",
+  as: "client",
+});
+
+db.client.hasMany(db.clientImage, {
+  foreignKey: "clientId",
+  as: "clientImages",
 });
 
 //Entities
