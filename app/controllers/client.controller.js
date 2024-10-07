@@ -7,40 +7,15 @@ const storage = multer.memoryStorage(); // or diskStorage() if you want to save 
 const upload = multer({ storage: storage });
 
 exports.allClients = (req, res) => {
-    Client.findAll({
-        order: [
-            ["updatedAt", "DESC"],
-            ["id", "ASC"],
-        ],
-        // Optionally include any required fields, like logo and signature
-        attributes: {
-            include: [
-                // Include the logo and signature fields as binary data
-                'logo',
-                'signature'
-            ]
-        }
-    })
-        .then((clients) => {
-            // Transform clients to include base64 images if necessary
-            const transformedClients = clients.map(client => {
-                // Convert logo and signature to Base64 if they are binary fields
-                return {
-                    ...client.dataValues,
-                    logo: client.logo ? client.logo.toString('base64') : null,
-                    signature: client.signature ? client.signature.toString('base64') : null,
-                };
-            });
-
-            res.status(200).send(transformedClients);
+    db.Client.findAll() // Assuming you have a Client model defined
+        .then(clients => {
+            res.status(200).json(clients); // Respond with client data
         })
-        .catch((err) => {
-            console.error('Error retrieving clients:', err.message); // Log the error for debugging
-            res.status(500).send({ message: 'Could not retrieve clients. Please try again later.' });
+        .catch(err => {
+            console.error("Error fetching clients:", err);
+            res.status(500).send({ message: "Error retrieving clients." });
         });
 };
-
-
 
 
 // Function to create a client
