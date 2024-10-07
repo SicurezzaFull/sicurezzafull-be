@@ -16,8 +16,8 @@ exports.allClients = (req, res) => {
         attributes: {
             include: [
                 // Include the logo and signature fields as binary data
-                'logo_data',
-                'signature_data'
+                'logo',
+                'signature'
             ]
         }
     })
