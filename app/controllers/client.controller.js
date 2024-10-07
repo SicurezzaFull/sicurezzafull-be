@@ -2,7 +2,7 @@ const db = require("../models");
 const Client = db.client;
 const Op = db.Sequelize.Op;
 const multer = require('multer');
-
+const AWS = require("aws-sdk");
 
 const spacesEndpoint = new AWS.Endpoint("fra1.digitaloceanspaces.com");
 const s3Client = new AWS.S3({
