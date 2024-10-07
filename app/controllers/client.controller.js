@@ -14,13 +14,7 @@ exports.allClients = (req, res) => {
         ],
     })
         .then((clients) => {
-            const clientsWithImages = clients.map(client => {
-                return {
-                    ...client.dataValues,
-                    logo: client.logo ? `${req.protocol}://${req.get('host')}/uploads/${client.logo}` : null // Create full URL for logo
-                };
-            });
-            return res.status(200).json(clientsWithImages);
+            res.status(200).send(clients);
         })
         .catch((err) => {
             res.status(500).send({ message: err.message });
