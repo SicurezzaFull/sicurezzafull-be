@@ -16,8 +16,8 @@ exports.allClients = (req, res) => {
             const clientData = clients.map(client => {
                 return {
                     ...client.dataValues,
-                    logoPath: `${BASE_URL}uploads/${client.logo}`, // Ensure BASE_URL is set correctly
-                    signaturePath: `${BASE_URL}uploads/${client.signature}`
+                    logoPath: `${BASE_URL}${client.logo}`, // Ensure BASE_URL is set correctly
+                    signaturePath: `${BASE_URL}${client.signature}`
                 };
             });
             res.status(200).json(clientData);
