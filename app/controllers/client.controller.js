@@ -42,40 +42,34 @@ exports.allClients = (req, res) => {
 
 
 
-exports.createClient = [
-    upload.fields([{ name: 'signature', maxCount: 1 }, { name: 'logo', maxCount: 1 }]),
-    (req, res) => {
-        const { name, email, phone, address, city, postalCode, country, vat, pec, status } = req.body;
 
-        console.log(req.body);
+// Function to create a client
+exports.createClient = async (req, res) => {
+    try {
+        const clientData = {
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            address: req.body.address,
+            city: req.body.city,
+            postalCode: req.body.postalCode,
+            country: req.body.country,
+            vat: req.body.vat,
+            pec: req.body.pec,
+            status: req.body.status,
+            logo: req.files['logo'] ? req.files['logo'][0].path : null,
+            signature: req.files['signature'] ? req.files['signature'][0].path : null,
+        };
 
-        const signature = req.files['signature'] ? req.files['signature'][0].buffer.toString('base64') : null;
-        const logo = req.files['logo'] ? req.files['logo'][0].buffer.toString('base64') : null;
+        // Save the client data to the database
+        const newClient = await Client.create(clientData); // Use your ORM to save the client
 
-        Client.create({
-            name,
-            email,
-            phone,
-            address,
-            city,
-            postalCode,
-            country,
-            vat,
-            pec,
-            signature,
-            logo,
-            status: status === 'true'
-        })
-            .then(() => {
-                res.status(201).send({ message: "Cliente creato con successo!" });
-            })
-            .catch((err) => {
-                console.error(err);
-                res.status(500).send({ message: "Errore durante la creazione del cliente." });
-            });
+        res.status(201).json({ message: 'Client created successfully', client: newClient });
+    } catch (error) {
+        console.error('Error creating client:', error);
+        res.status(500).json({ message: 'Error creating client', error: error.message });
     }
-];
-
+};
 exports.deleteClient = (req, res) => {
     // Elimina il cliente
     Client.destroy({

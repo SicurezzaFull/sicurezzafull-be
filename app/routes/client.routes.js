@@ -3,8 +3,17 @@ const { authJwt } = require("../middleware");
 const controller = require("../controllers/client.controller");
 const multer = require('multer');
 
-const storage = multer.memoryStorage(); // or diskStorage() if you want to save files to disk
-const upload = multer({ storage: storage })
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Path where files will be saved
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`); // Unique file name
+    },
+});
+
+const upload = multer({ storage });
+
 
 module.exports = function (app) {
     app.use(function (req, res, next) {
@@ -30,8 +39,11 @@ module.exports = function (app) {
     );
 
     // Crea un nuovo client
-    app.post("/api/client/createClient", [authJwt.verifyToken], controller.createClient);
-
+    app.post(
+        "/api/client/createClient",
+        [authJwt.verifyToken, upload.fields([{ name: 'logo' }, { name: 'signature' }])], // Add upload middleware here
+        controller.createClient
+    );
 
     // Aggiorna un client esistente
     app.patch(
