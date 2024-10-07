@@ -1,5 +1,6 @@
 const db = require("../models");
 const Client = db.client;
+const ClientImages = db.ClientImages;
 const Op = db.Sequelize.Op;
 const multer = require('multer');
 const AWS = require("aws-sdk");
