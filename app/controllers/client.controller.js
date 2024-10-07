@@ -27,8 +27,8 @@ exports.allClients = (req, res) => {
                 // Convert logo and signature to Base64 if they are binary fields
                 return {
                     ...client.dataValues,
-                    logo_data: client.logo_data ? client.logo_data.toString('base64') : null,
-                    signature_data: client.signature_data ? client.signature_data.toString('base64') : null,
+                    logo: client.logo ? client.logo.toString('base64') : null,
+                    signature: client.signature ? client.signature.toString('base64') : null,
                 };
             });
 
