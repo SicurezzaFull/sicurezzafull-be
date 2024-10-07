@@ -3,6 +3,13 @@ const { authJwt } = require("../middleware");
 const controller = require("../controllers/client.controller");
 const multer = require('multer');
 
+
+const uploadDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
+
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads/'); // Path where files will be saved
