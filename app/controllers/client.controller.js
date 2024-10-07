@@ -6,10 +6,21 @@ const multer = require('multer');
 const storage = multer.memoryStorage(); // or diskStorage() if you want to save files to disk
 const upload = multer({ storage: storage });
 
+
+const BASE_URL = 'https://prod-sicurezzafull-be.onrender.com/';
+
+    
 exports.allClients = (req, res) => {
-    Client.findAll() // Assuming you have a Client model defined
+    Client.findAll()
         .then(clients => {
-            res.status(200).json(clients); // Respond with client data
+            const clientData = clients.map(client => {
+                return {
+                    ...client.dataValues,
+                    logoPath: `${BASE_URL}uploads/${client.logoPath}`, // Ensure BASE_URL is set correctly
+                    signaturePath: `${BASE_URL}uploads/${client.signaturePath}`
+                };
+            });
+            res.status(200).json(clientData);
         })
         .catch(err => {
             console.error("Error fetching clients:", err);
