@@ -7,7 +7,7 @@ const storage = multer.memoryStorage(); // or diskStorage() if you want to save 
 const upload = multer({ storage: storage });
 
 
-const BASE_URL = 'https://prod-sicurezzafull-be.onrender.com/';
+const BASE_URL = 'https://prod-sicurezzafull-be.onrender.com';
 
     
 exports.allClients = (req, res) => {
