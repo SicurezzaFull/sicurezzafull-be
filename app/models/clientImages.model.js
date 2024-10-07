@@ -1,4 +1,4 @@
-const db = require(".");
+const db = require("../models");
 
 module.exports = (sequelize, Sequelize) => {
     const ClientImages = sequelize.define("clientImages", {
