@@ -55,6 +55,7 @@ exports.createClient = [
             });
     }
 ];
+
 exports.deleteClient = (req, res) => {
     // Elimina il cliente
     Client.destroy({
