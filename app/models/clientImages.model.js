@@ -10,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
         etag: {
             type: Sequelize.STRING,
         },
+        type: {
+            type: Sequelize.STRING,
+        },
         location: {
             type: Sequelize.STRING,
         },

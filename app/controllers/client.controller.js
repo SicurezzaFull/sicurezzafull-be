@@ -74,6 +74,7 @@ exports.createClient = async (req, res) => {
             const logoUploadResult = await s3Client.upload(logoUploadParams).promise();
             logoImage = {
                 etag: logoUploadResult.ETag,
+                type: "logo",
                 location: logoUploadResult.Location,
                 keyFile: logoUploadResult.Key,
                 bucket: logoUploadResult.Bucket,
@@ -92,6 +93,7 @@ exports.createClient = async (req, res) => {
             const signatureUploadResult = await s3Client.upload(signatureUploadParams).promise();
             signatureImage = {
                 etag: signatureUploadResult.ETag,
+                type:"signature",
                 location: signatureUploadResult.Location,
                 keyFile: signatureUploadResult.Key,
                 bucket: signatureUploadResult.Bucket,
