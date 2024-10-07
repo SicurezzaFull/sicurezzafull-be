@@ -21,15 +21,15 @@ const upload = multer({ storage: storage });
 
 // Function to retrieve all clients
 exports.allClients = (req, res) => {
-    Client.findAll()
+    Client.findAll({
+        include: [
+            {
+                model: db.clientImage,
+                as: "clientImages",
+            },
+        ],
+    })
         .then(clients => {
-            const clientData = clients.map(client => {
-                return {
-                    ...client.dataValues,
-                    logo: client.logo ? client.logo.toString('base64') : null, // Convert logo buffer to base64
-                    signature: client.signature ? client.signature.toString('base64') : null, // Convert signature buffer to base64
-                };
-            });
             res.status(200).json(clientData);
         })
         .catch(err => {
@@ -93,7 +93,7 @@ exports.createClient = async (req, res) => {
             const signatureUploadResult = await s3Client.upload(signatureUploadParams).promise();
             signatureImage = {
                 etag: signatureUploadResult.ETag,
-                type:"signature",
+                type: "signature",
                 location: signatureUploadResult.Location,
                 keyFile: signatureUploadResult.Key,
                 bucket: signatureUploadResult.Bucket,
