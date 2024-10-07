@@ -12,14 +12,34 @@ exports.allClients = (req, res) => {
             ["updatedAt", "DESC"],
             ["id", "ASC"],
         ],
+        // Optionally include any required fields, like logo and signature
+        attributes: {
+            include: [
+                // Include the logo and signature fields as binary data
+                'logo_data',
+                'signature_data'
+            ]
+        }
     })
         .then((clients) => {
-            res.status(200).send(clients);
+            // Transform clients to include base64 images if necessary
+            const transformedClients = clients.map(client => {
+                // Convert logo and signature to Base64 if they are binary fields
+                return {
+                    ...client.dataValues,
+                    logo_data: client.logo_data ? client.logo_data.toString('base64') : null,
+                    signature_data: client.signature_data ? client.signature_data.toString('base64') : null,
+                };
+            });
+
+            res.status(200).send(transformedClients);
         })
         .catch((err) => {
-            res.status(500).send({ message: err.message });
+            console.error('Error retrieving clients:', err.message); // Log the error for debugging
+            res.status(500).send({ message: 'Could not retrieve clients. Please try again later.' });
         });
 };
+
 
 
 exports.createClient = [
