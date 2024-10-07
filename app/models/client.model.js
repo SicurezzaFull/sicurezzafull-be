@@ -33,10 +33,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
         },
         signature: {  // Firma
-            type: Sequelize.LONGBLOB, // Use BLOB for files
+            type: Sequelize.BLOB, // Use BLOB for files
         },
         logo: {  // Logo aziendale
-            type: Sequelize.LONGBLOB, // Use BLOB for files
+            type: Sequelize.BLOB, // Use BLOB for files
         },
         status: {
             type: Sequelize.BOOLEAN,
