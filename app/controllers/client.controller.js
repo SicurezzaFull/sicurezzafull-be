@@ -7,7 +7,7 @@ const storage = multer.memoryStorage(); // or diskStorage() if you want to save 
 const upload = multer({ storage: storage });
 
 exports.allClients = (req, res) => {
-    db.Client.findAll() // Assuming you have a Client model defined
+    Client.findAll() // Assuming you have a Client model defined
         .then(clients => {
             res.status(200).json(clients); // Respond with client data
         })
