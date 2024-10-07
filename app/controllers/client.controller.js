@@ -1,6 +1,6 @@
 const db = require("../models");
 const Client = db.client;
-const ClientImages = db.ClientImages;
+const ClientImages = db.clientImage;
 const Op = db.Sequelize.Op;
 const multer = require('multer');
 const AWS = require("aws-sdk");
@@ -101,10 +101,12 @@ exports.createClient = async (req, res) => {
 
         // Save logo and signature metadata to ClientImages table
         if (logoImage) {
+            console.log("logoImage", logoImage)
             await ClientImages.create(logoImage); // Use your ORM to save the image metadata
         }
 
         if (signatureImage) {
+            console.log("signatureImage", signatureImage)
             await ClientImages.create(signatureImage); // Use your ORM to save the image metadata
         }
 
