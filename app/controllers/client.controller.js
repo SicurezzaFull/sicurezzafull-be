@@ -10,14 +10,15 @@ const upload = multer({ storage: storage });
 const BASE_URL = 'https://prod-sicurezzafull-be.onrender.com';
 
     
+// Function to retrieve all clients
 exports.allClients = (req, res) => {
     Client.findAll()
         .then(clients => {
             const clientData = clients.map(client => {
                 return {
                     ...client.dataValues,
-                    logoPath: `${BASE_URL}${client.logo}`, // Ensure BASE_URL is set correctly
-                    signaturePath: `${BASE_URL}${client.signature}`
+                    logo: client.logo ? client.logo.toString('base64') : null, // Convert logo buffer to base64
+                    signature: client.signature ? client.signature.toString('base64') : null, // Convert signature buffer to base64
                 };
             });
             res.status(200).json(clientData);
@@ -29,9 +30,15 @@ exports.allClients = (req, res) => {
 };
 
 
+
+// Function to create a client
 // Function to create a client
 exports.createClient = async (req, res) => {
     try {
+        // If using multer for file uploads, ensure to have it set up to use memory storage
+        const logoBuffer = req.files['logo'] ? req.files['logo'][0].buffer : null;
+        const signatureBuffer = req.files['signature'] ? req.files['signature'][0].buffer : null;
+
         const clientData = {
             name: req.body.name,
             email: req.body.email,
@@ -43,8 +50,8 @@ exports.createClient = async (req, res) => {
             vat: req.body.vat,
             pec: req.body.pec,
             status: req.body.status,
-            logo: req.files['logo'] ? req.files['logo'][0].path : null,
-            signature: req.files['signature'] ? req.files['signature'][0].path : null,
+            logo: logoBuffer, // Store the logo as binary data
+            signature: signatureBuffer, // Store the signature as binary data
         };
 
         // Save the client data to the database
@@ -56,6 +63,8 @@ exports.createClient = async (req, res) => {
         res.status(500).json({ message: 'Error creating client', error: error.message });
     }
 };
+
+
 exports.deleteClient = (req, res) => {
     // Elimina il cliente
     Client.destroy({
