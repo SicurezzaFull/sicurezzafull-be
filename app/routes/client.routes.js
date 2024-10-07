@@ -3,8 +3,7 @@ const { authJwt } = require("../middleware");
 const controller = require("../controllers/client.controller");
 const multer = require('multer');
 const path = require('path');
-
-
+const fs = require("fs");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
