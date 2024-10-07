@@ -67,7 +67,7 @@ exports.createClient = async (req, res) => {
         if (logoFile) {
             const logoUploadParams = {
                 Bucket: 'sicurezzafull', // Replace with your bucket name
-                Key: `clients/logos/${logoFile.originalname}`, // Set the desired path for the logo
+                Key: `clients/${newClient.id}/logos/${logoFile.originalname}`, // Set the desired path for the logo
                 Body: logoFile.buffer,
             };
 
@@ -85,7 +85,7 @@ exports.createClient = async (req, res) => {
         if (signatureFile) {
             const signatureUploadParams = {
                 Bucket: 'sicurezzafull', // Replace with your bucket name
-                Key: `clients/signatures/${signatureFile.originalname}`, // Set the desired path for the signature
+                Key: `clients/${newClient.id}/signatures/${signatureFile.originalname}`, // Set the desired path for the signature
                 Body: signatureFile.buffer,
             };
 
