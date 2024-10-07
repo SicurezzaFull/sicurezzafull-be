@@ -30,7 +30,7 @@ exports.allClients = (req, res) => {
         ],
     })
         .then(clients => {
-            res.status(200).json(clientData);
+            res.status(200).json(clients);
         })
         .catch(err => {
             console.error("Error fetching clients:", err);
