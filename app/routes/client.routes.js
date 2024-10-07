@@ -2,6 +2,7 @@ const { authJwt } = require("../middleware");
 
 const controller = require("../controllers/client.controller");
 const multer = require('multer');
+const path = require('path');
 
 
 const uploadDir = path.join(__dirname, '../uploads');
