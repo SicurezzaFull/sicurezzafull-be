@@ -54,6 +54,11 @@ exports.createClient = async (req, res) => {
             country: req.body.country,
             vat: req.body.vat,
             pec: req.body.pec,
+            cfepi: req.body.cfepi,
+            rea: req.body.rea,
+            posinps: req.body.posinps,
+            patinail: req.body.patinail,
+            cassaedile: req.body.cassaedile,
             status: req.body.status,
         };
 
@@ -162,6 +167,11 @@ exports.patchClient = (req, res) => {
             country: req.body.country,
             vat: req.body.vat,
             pec: req.body.pec,
+            cfepi: req.body.cfepi,
+            rea: req.body.rea,
+            posinps: req.body.posinps,
+            patinail: req.body.patinail,
+            cassaedile: req.body.cassaedile,
             signature: req.body.signature,
             logo: req.body.logo,
             status: req.body.status,

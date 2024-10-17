@@ -32,6 +32,22 @@ module.exports = (sequelize, Sequelize) => {
         pec: {  // Posta Elettronica Certificata
             type: Sequelize.STRING,
         },
+        cfepi: { 
+            type: Sequelize.STRING,
+        },
+
+        rea: {  
+            type: Sequelize.STRING,
+        },
+        posinps: {  
+            type: Sequelize.STRING,
+        },
+        patinail: {  
+            type: Sequelize.STRING,
+        },
+        cassaedile: {  
+            type: Sequelize.STRING,
+        },
         signature: {  // Firma
             type: Sequelize.JSONB, // Use BLOB for files
         },
