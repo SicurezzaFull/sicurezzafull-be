@@ -125,17 +125,27 @@ exports.createClient = async (req, res) => {
 };
 
 exports.deleteClient = (req, res) => {
-    // Elimina il cliente
-    Client.destroy({
-        where: { id: req.params.id },
+    // Elimina prima le immagini associate
+    ClientImages.destroy({
+        where: { clientId: req.params.id },
     })
-        .then((client) => {
-            res.status(200).send({ message: "Cliente eliminato con successo!" });
+        .then(() => {
+            // Poi elimina il cliente
+            Client.destroy({
+                where: { id: req.params.id },
+            })
+                .then(() => {
+                    res.status(200).send({ message: "Cliente e immagini eliminati con successo!" });
+                })
+                .catch((err) => {
+                    res.status(500).send({ message: err.message });
+                });
         })
         .catch((err) => {
             res.status(500).send({ message: err.message });
         });
 };
+
 
 exports.getClient = (req, res) => {
     // Ottieni un cliente per ID
